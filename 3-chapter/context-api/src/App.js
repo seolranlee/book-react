@@ -1,40 +1,55 @@
 import React, { Component } from 'react';
 
-const UserContext = React.createContext('unknown')
+const UserContext = React.createContext({
+  username: 'unknown',
+  helloCount: 0,
+  onHello: () => {}
+})
 
 class App extends Component {
-  state = {
-    username: '',
+  constructor(props){
+    super(props)
+    this.state = {
+      username: 'mike',
+      helloCount: 0,
+      onHello: this.onHello
+    }
   }
-  onChangeName = (e) => {
-    const username = e.target.value
-    this.setState({ username })
 
+  onHello = () => {
+    const { helloCount } = this.state
+    this.setState({
+      helloCount: helloCount + 1
+    })
   }
+  
   render() {
-    const { username } = this.state
     return (
       <div>
-        <UserContext.Provider value={username}>
+        <UserContext.Provider value={this.state}>
+          <div>상단 메뉴</div>
           <Profile />
+          <div>하단 메뉴</div>
         </UserContext.Provider>
-        <input type="text" value={username} onChange={this.onChangeName}/>
       </div>
     );
   }
 }
 
-class Profile extends Component {
-  shouldComponentUpdate(){
-    return false
-  }
-  render() {
-    console.log('profile reRendering')
-    return <div>
-      <Greeting />
-    </div>
-  }
+function Profile() {
+  return <Greeting/>
 }
+// class Profile extends Component {
+//   shouldComponentUpdate(){
+//     return false
+//   }
+//   render() {
+//     console.log('profile reRendering')
+//     return <div>
+//       <Greeting/>
+//     </div>
+//   }
+// }
 
 // class Profile extends React.PureComponent {
   
@@ -49,7 +64,13 @@ class Profile extends Component {
 function Greeting() {
   return (
     <UserContext.Consumer>
-      {(username) => `${username}님 안녕하세요`}
+      {value => (
+        <>
+          <p>{value.username}님 안녕하세요</p>
+          <p>인사 횟수: {value.helloCount}</p>
+          <button onClick={value.onHello}>인사하기</button>
+        </>
+      )}
     </UserContext.Consumer>
   )
     
