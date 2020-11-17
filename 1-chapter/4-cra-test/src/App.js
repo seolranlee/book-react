@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import smallImage from './small.png';
 import bigImage from './big.jpeg';
-import TodoList from './TodoList';
+import TodoList from './components/TodoList';
+import Data from './components/Data';
+import Counter from './components/Counter';
+import SetState from './components/SetState';
 import './test.css'
 
 console.log(`NODE_ENV = ${process.env.NODE_ENV}`)
@@ -17,6 +20,9 @@ class App extends Component {
         <img src={smallImage} />
         <p>{value}</p>
         <TodoList />
+        <Data />
+        <Counter />
+        <SetState />
       </div>
     );
   }

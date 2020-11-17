@@ -22,7 +22,8 @@ class App extends Component {
 }
 
 function Home({ match }) {
-  return <h2>이 곳은 홈페이지 입니다.</h2>
+  // return <h2>이 곳은 홈페이지 입니다.</h2>
+  return React.createElement('h2', {className: 'title', style: {color: "red", backgroundColor: "blue"}}, '이 곳은 홈페이지 입니다.')
 }
 
 function Photo({ match }) {
